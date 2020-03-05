@@ -15,10 +15,10 @@ CC = gcc
 LDLIBS  = -L/usr/lib/x86_64-linux-gnu -L/usr/lib -lm -lOpenCL
 INCLUDE = -ITools -I/usr/include/CL
 
-.PHONY: clean Prac2 run
-all:    
-	clean Prac2 run
-	mkdir -p $(PROG) $(OBJS)
+#.PHONY: clean Prac2 run
+#all:    
+#	clean Prac2 run
+#	mkdir -p $(PROG) $(OBJS)
 	
 clean:
 	rm -f -r $(PROG) $(OBJS)
@@ -31,5 +31,5 @@ Prac2:
 	$(CC) -o bin/Prac2 obj/main.o obj/OpenCL_Wrapper.o obj/Timer.o $(LDLIBS)
 
 run:
-	bin/Prac2
+	./bin/Prac2
 
