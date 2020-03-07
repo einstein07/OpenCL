@@ -30,12 +30,20 @@ void Process_OpenCL(){
 
  OpenCL_ConstantInt(3, N);
 
+ tic();
  OpenCL_WriteData(A_Buffer, N*N*sizeof(float), A);
  OpenCL_WriteData(B_Buffer, N*N*sizeof(float), B);
+ printf("\nOpenCL write time: %lg ms\n\n", toc()/1e-3);
 
+ tic();
  OpenCL_Run(N, LocalSize);
+ printf("\nOpenCL process time: %lg ms\n\n", toc()/1e-3);
 
+
+ tic();
  OpenCL_ReadData(OutputBuffer, N*N*sizeof(float), Output_OpenCL);
+ printf("\nOpenCL read time: %lg ms\n\n", toc()/1e-3);
+
 }
 //------------------------------------------------------------------------------
 
@@ -101,7 +109,7 @@ int main(){
  // Load a kernel
  if(!OpenCL_LoadKernel("OpenCL/Kernel.cl", "Multiply")) return 1;
 
- N = 3;
+ N = 3000;
  size_t BufferSize = N*N*sizeof(float);
 
  // Allocate CPU RAM
@@ -125,12 +133,12 @@ int main(){
  Process_Serial();
  printf("Serial: %lg ms\n", toc()/1e-3);
 
- tic();
+ //tic();
  Process_OpenCL();
- printf("\nOpenCL: %lg ms\n\n", toc()/1e-3);
+ //printf("\nOpenCL total time: %lg ms\n\n", toc()/1e-3);
 
  // Compare results
- Compare();
+ //Compare();
 
  // Clean-up
  free(A);
